@@ -8,8 +8,6 @@ activePlayer = 0;
 
 console.log(dice);
 
-document.getElementById("score-0").innerHTML = scores[0];
-document.querySelector("#score-1").innerHTML= scores[1];
 document.querySelector("img").src="dice-"+6+".png";
 
 $(".btn-roll").click(function(){
@@ -30,3 +28,18 @@ $(".btn-roll").click(function(){
     }
    }
 });
+$(".btn-hold").click(function(){
+    scores[activePlayer] += roundScore; 
+    roundScore = 0;
+    document.querySelector("#current-"+activePlayer).innerHTML=roundScore;
+    document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer] ;
+
+    if(activePlayer){
+        activePlayer = 0;       
+    }
+    else{
+        activePlayer = 1;
+    }
+
+});
+
