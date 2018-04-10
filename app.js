@@ -6,32 +6,33 @@ initGame();
 
 document.querySelector(".btn-roll").addEventListener('click',function(){
     if(scores[activePlayer] < 20){
-    dice = Math.floor(Math.random()*6)+1;
-    document.querySelector("img").style.display = 'block';
-    document.querySelector("img").src="dice-"+dice+".png";
-    if(dice !== 1){
-    roundScore += dice;
-    document.querySelector("#current-"+activePlayer).innerHTML =  roundScore;
-   }
-   else{
-    changePlayer();
-   }
+        dice = Math.floor(Math.random()*6)+1;
+        document.querySelector("img").style.display = 'block';
+        document.querySelector("img").src = "dice-" + dice + ".png";
+        if(dice !== 1){
+        roundScore += dice;
+        document.querySelector("#current-"+activePlayer).innerHTML =  roundScore;
+        }
+        else{
+        changePlayer();
+        }
 } 
 });
 
 document.querySelector(".btn-hold").addEventListener('click',function(){
-    document.querySelector("img").style.display = 'none';
-    scores[activePlayer] += roundScore; 
-    document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer];
-    if(scores[activePlayer] >= 20){
-        document.querySelector("#name-"+activePlayer).innerHTML = "Winner!";
-        document.querySelector(".player-"+ activePlayer + "-panel").classList.add("winner");
-        document.querySelector(".player-"+ activePlayer + "-panel").classList.toggle("active");
+    if(scores[activePlayer] < 20){
+        document.querySelector("img").style.display = 'none';
+        scores[activePlayer] += roundScore; 
+        document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer];
+        if(scores[activePlayer] >= 20){
+            document.querySelector("#name-"+activePlayer).innerHTML = "Winner!";
+            document.querySelector(".player-"+ activePlayer + "-panel").classList.add("winner");
+            document.querySelector(".player-"+ activePlayer + "-panel").classList.toggle("active");
+        }
+        else{
+            changePlayer();
+        }
     }
-    else{
-        changePlayer();
-    }
-
 });
 
 document.querySelector(".btn-new").addEventListener('click',initGame);
