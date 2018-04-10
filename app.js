@@ -2,20 +2,10 @@ console.log("roll dice console");
 
 var scores, roundScore, activePlayer, dice;
 
-scores = [0,0];
-roundScore = 0;
-activePlayer = 0;
-
-console.log(dice);
-
-// not displaying dice when you open game
-document.querySelector("img").style.display = 'none';
-
-//default make player 1 active
-document.querySelector(".player-0-panel").className += " active"; 
-
+initGame();
 
 document.querySelector(".btn-roll").addEventListener('click',function(){
+    if(scores[activePlayer] < 20){
     dice = Math.floor(Math.random()*6)+1;
     document.querySelector("img").style.display = 'block';
     document.querySelector("img").src="dice-"+dice+".png";
@@ -25,21 +15,59 @@ document.querySelector(".btn-roll").addEventListener('click',function(){
    }
    else{
     changePlayer();
-   } 
+   }
+} 
 });
 
 document.querySelector(".btn-hold").addEventListener('click',function(){
+    document.querySelector("img").style.display = 'none';
     scores[activePlayer] += roundScore; 
     document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer];
-    changePlayer();
-    document.querySelector("img").style.display = 'none';
+    if(scores[activePlayer] >= 20){
+        document.querySelector("#name-"+activePlayer).innerHTML = "Winner!";
+        document.querySelector(".player-"+ activePlayer + "-panel").classList.add("winner");
+        document.querySelector(".player-"+ activePlayer + "-panel").classList.toggle("active");
+    }
+    else{
+        changePlayer();
+    }
+
 });
+
+document.querySelector(".btn-new").addEventListener('click',initGame);
 
 function changePlayer(){
     roundScore=0;
-    document.querySelector("#current-"+activePlayer).innerHTML=0;
-    document.querySelector(".player-"+ activePlayer +"-panel").classList.remove("active");    
+    document.querySelector("#current-"+activePlayer).innerHTML = 0;
+    document.querySelector(".player-"+ activePlayer +"-panel").classList.toggle("active");    
     activePlayer = activePlayer === 0 ? 1 : 0 ; 
-    document.querySelector(".player-"+ activePlayer + "-panel").classList.add("active");
+    document.querySelector(".player-"+ activePlayer + "-panel").classList.toggle("active");
 
 }
+
+function initGame(){
+    scores = [0,0];
+    roundScore = 0;
+    activePlayer = 0;
+    
+    // not displaying dice when you open game
+    document.querySelector("img").style.display = 'none';
+    
+    document.querySelector("#score-0").innerHTML = 0;
+    document.querySelector("#score-1").innerHTML = 0;
+    document.querySelector("#current-0").innerHTML = 0;
+    document.querySelector("#current-1").innerHTML = 0;
+    
+    document.querySelector("#name-0").innerHTML = "PLAYER 1";
+    document.querySelector("#name-1").innerHTML = "PLAYER 2";
+
+    document.querySelector(".player-0-panel").classList.remove("winner");
+    document.querySelector(".player-1-panel").classList.remove("winner");     
+
+    document.querySelector(".player-0-panel").classList.remove("active");
+    document.querySelector(".player-1-panel").classList.remove("active"); 
+    //default make player 1 active
+    document.querySelector(".player-0-panel").classList.add("active");  
+
+    
+    }
