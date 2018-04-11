@@ -1,14 +1,13 @@
-console.log("roll dice console");
 
 var scores, roundScore, activePlayer, dice;
 
 initGame();
 
 document.querySelector(".btn-roll").addEventListener('click',function(){
-    if(scores[activePlayer] < 20){
+    if(scores[activePlayer] < 100){
         dice = Math.floor(Math.random()*6)+1;
         document.querySelector("img").style.display = 'block';
-        document.querySelector("img").src = "dice-" + dice + ".png";
+        document.querySelector("img").src = "images/dice-" + dice + ".png";
         if(dice !== 1){
         roundScore += dice;
         document.querySelector("#current-"+activePlayer).innerHTML =  roundScore;
@@ -20,11 +19,11 @@ document.querySelector(".btn-roll").addEventListener('click',function(){
 });
 
 document.querySelector(".btn-hold").addEventListener('click',function(){
-    if(scores[activePlayer] < 20){
+    if(scores[activePlayer] < 100){
         document.querySelector("img").style.display = 'none';
         scores[activePlayer] += roundScore; 
         document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer];
-        if(scores[activePlayer] >= 20){
+        if(scores[activePlayer] >= 100){
             document.querySelector("#name-"+activePlayer).innerHTML = "Winner!";
             document.querySelector(".player-"+ activePlayer + "-panel").classList.add("winner");
             document.querySelector(".player-"+ activePlayer + "-panel").classList.toggle("active");
