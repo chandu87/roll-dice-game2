@@ -1,9 +1,10 @@
+//variable initialization
+var scores, roundScore, activePlayer, dice1, dice2, gameScore;
 
-var scores, roundScore, activePlayer, dice1, dice2;
-var gameScore;
-
+//function call to initialize game with default values
 initGame();
 
+//eventlistener for roll button
 document.querySelector(".btn-roll").addEventListener('click',function(){
     if(scores[activePlayer] < gameScore){
         dice1 = Math.floor(Math.random()*6)+1;
@@ -13,7 +14,8 @@ document.querySelector(".btn-roll").addEventListener('click',function(){
         document.querySelector(".dice").src = "images/dice-" + dice1 + ".png";
         document.querySelector(".dice2").src = "images/dice-" + dice2 + ".png";
 
-        if(dice1 ===6 && dice2 === 6){
+        //when user get 6 number on both dice , total score becomes 0
+        if(dice1 === 6 && dice2 === 6){
             scores[activePlayer] = 0;
             document.querySelector("#score-"+activePlayer).innerHTML =  0;
             changePlayer();
@@ -22,13 +24,15 @@ document.querySelector(".btn-roll").addEventListener('click',function(){
         roundScore += (dice1 + dice2);
         document.querySelector("#current-"+activePlayer).innerHTML =  roundScore;
         }
+         //when player get number one on any one dice his current score becomes 0 and turn 
+         //changes to other player
         else{
         changePlayer();
         }
-}
- 
+    }
 });
 
+//event listener for hold button
 document.querySelector(".btn-hold").addEventListener('click',function(){
     if(scores[activePlayer] < gameScore){
         document.querySelector(".dice").style.display = 'none';
@@ -36,6 +40,7 @@ document.querySelector(".btn-hold").addEventListener('click',function(){
         scores[activePlayer] += roundScore; 
         document.querySelector("#score-"+activePlayer).innerHTML = scores[activePlayer];
         
+        //user can add their wished winning score
         var inputValue = Number(document.querySelector("input").value);
         if(inputValue){
             gameScore = inputValue;
@@ -53,8 +58,10 @@ document.querySelector(".btn-hold").addEventListener('click',function(){
     }
 });
 
+//new game button where reset is done
 document.querySelector(".btn-new").addEventListener('click',initGame);
 
+//function for changing players turn
 function changePlayer(){
     roundScore=0;
     document.querySelector("#current-"+activePlayer).innerHTML = 0;
@@ -64,6 +71,7 @@ function changePlayer(){
 
 }
 
+//function for initializing game or reseting all values
 function initGame(){
     scores = [0,0];
     roundScore = 0;
